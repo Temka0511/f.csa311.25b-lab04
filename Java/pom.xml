@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
@@ -11,9 +12,7 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jacoco.version>0.8.11</jacoco.version>
     </properties>
 
     <dependencies>
@@ -25,23 +24,21 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- local jar file (system scope, try to replace with Maven repository artifact if possible) -->
+        <!-- LinkedIntQueue dependency (system scope-гүй, local repository-д суулгасан) -->
         <dependency>
-            <groupId>LinkedIntQueue</groupId>
+            <groupId>org.example</groupId>
             <artifactId>LinkedIntQueue</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/LinkedIntQueue.jar</systemPath>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- JaCoCo plugin to collect code coverage -->
+            <!-- JaCoCo plugin (Java 21-д дэмжигдсэн шинэ хувилбар) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -51,7 +48,7 @@
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>verify</phase> <!-- changed from test to verify for stability -->
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -59,36 +56,28 @@
                 </executions>
             </plugin>
 
-            <!-- Maven compiler plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>21</release> <!-- preferred over source/target with JDK 21 -->
-                </configuration>
-            </plugin>
-
             <!-- Maven site plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.0</version>
+                <version>3.12.1</version>
             </plugin>
         </plugins>
     </build>
 
     <reporting>
         <plugins>
+            <!-- Test report -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.0.0-M9</version>
             </plugin>
+            <!-- Coverage report -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
+                <version>0.8.12</version>
             </plugin>
         </plugins>
     </reporting>
